@@ -7,11 +7,24 @@
   <meta name="description" content="Nexify Connect is the premium all-in-one social ecosystem: messaging, calls, communities, an AI assistant, music, fitness and focus, wrapped in a next-gen experience. Connect Smarter." />
   <meta name="theme-color" content="#070B14" />
 
+  <link rel="canonical" href="https://appdeloper.github.io/nexify-connect-landing/" />
+  <meta name="author" content="Nexify Connect" />
+  <meta name="keywords" content="Nexify Connect, social app for teens, chat app, group chat, communities, AI assistant, music, fitness, focus, Connect Smarter" />
+
   <!-- Open Graph -->
+  <meta property="og:site_name" content="Nexify Connect" />
   <meta property="og:title" content="Nexify Connect - Connect Smarter" />
-  <meta property="og:description" content="One app for chats, calls, communities, AI, music, fitness and focus. Connect Smarter." />
+  <meta property="og:description" content="One app for chats, calls, communities, AI, music, fitness and focus. Made for teens. Connect Smarter." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/logo.png" />
+  <meta property="og:url" content="https://appdeloper.github.io/nexify-connect-landing/" />
+  <meta property="og:image" content="https://appdeloper.github.io/nexify-connect-landing/assets/logo.png" />
+  <meta property="og:image:alt" content="Nexify Connect logo" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Nexify Connect - Connect Smarter" />
+  <meta name="twitter:description" content="One app for chats, calls, communities, AI, music, fitness and focus. Made for teens." />
+  <meta name="twitter:image" content="https://appdeloper.github.io/nexify-connect-landing/assets/logo.png" />
 
   <link rel="icon" type="image/png" href="assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -363,6 +376,76 @@
     .reveal-delay-2 { transition-delay: 160ms; }
     .reveal-delay-3 { transition-delay: 240ms; }
 
+    /* ── Mobile menu ── */
+    .hamburger {
+      display: none; width: 44px; height: 44px; border: none; background: transparent; cursor: pointer;
+      flex-direction: column; align-items: center; justify-content: center; gap: 5px; border-radius: 12px;
+    }
+    .hamburger span { width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform var(--dur-fast) var(--n-ease), opacity var(--dur-fast) var(--n-ease); }
+    .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      position: fixed; inset: 70px 0 auto 0; z-index: 45;
+      background: rgba(7,9,15,0.96); backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(79,70,229,0.2);
+      display: flex; flex-direction: column; padding: 12px 24px 24px;
+      transform: translateY(-12px); opacity: 0; pointer-events: none;
+      transition: opacity var(--dur-normal) var(--n-ease), transform var(--dur-normal) var(--n-ease);
+    }
+    .mobile-menu.open { transform: none; opacity: 1; pointer-events: auto; }
+    .mobile-menu a { padding: 16px 8px; color: var(--text-muted); font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a.btn { margin-top: 16px; color: #fff; }
+    @media (max-width: 860px) { .hamburger { display: flex; } }
+    @media (min-width: 861px) { .mobile-menu { display: none; } }
+
+    /* ── How it works ── */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+    .step { text-align: center; padding: 32px 24px; border-radius: var(--radius-lg);
+      background: rgba(13,19,38,0.6); border: 1px solid var(--n-border); position: relative; }
+    .step .n {
+      width: 48px; height: 48px; margin: 0 auto 16px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; color: #fff;
+      background: var(--g-cta); box-shadow: var(--glow-sm);
+    }
+    .step h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -.3px; }
+    .step p { color: var(--text-muted); font-size: 15px; line-height: 1.65; }
+    .steps .arrow { display: none; }
+
+    /* ── FAQ accordion ── */
+    .faq { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+    .faq-item { background: rgba(13,19,38,0.6); border: 1px solid var(--n-border); border-radius: var(--radius-md); overflow: hidden; transition: border-color var(--dur-fast) var(--n-ease); }
+    .faq-item:hover { border-color: rgba(79,70,229,0.35); }
+    .faq-q {
+      width: 100%; text-align: left; background: transparent; border: none; cursor: pointer; color: #fff;
+      font-size: 16px; font-weight: 600; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      font-family: inherit; min-height: 44px;
+    }
+    .faq-q .chev { flex: 0 0 auto; transition: transform var(--dur-normal) var(--n-spring); color: var(--n-cyan); font-size: 20px; line-height: 1; }
+    .faq-item.open .faq-q .chev { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height var(--dur-normal) var(--n-ease); }
+    .faq-a p { padding: 0 24px 20px; color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+
+    /* ── Rich footer ── */
+    .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 32px; padding-bottom: 32px; }
+    @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; } }
+    @media (max-width: 460px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-grid .about { max-width: 280px; }
+    .footer-grid .about p { color: var(--text-muted); font-size: 14px; margin-top: 12px; line-height: 1.6; }
+    .footer-col h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--n-cyan); margin-bottom: 14px; font-weight: 700; }
+    .footer-col a { display: block; color: var(--text-muted); font-size: 14px; padding: 6px 0; transition: color var(--dur-fast) var(--n-ease); }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .socials { display: flex; gap: 10px; }
+    .socials a {
+      width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: rgba(13,19,38,0.7); border: 1px solid var(--n-border); color: var(--text-muted);
+      transition: all var(--dur-fast) var(--n-ease);
+    }
+    .socials a:hover { color: #fff; border-color: rgba(79,70,229,0.5); transform: translateY(-2px); box-shadow: var(--glow-sm); }
+
     /* ── SECTION 12 + reduced motion ── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -384,13 +467,24 @@
       </a>
       <nav class="nav-links">
         <a href="#features">Features</a>
+        <a href="#how">How it works</a>
         <a href="#showcase">Showcase</a>
-        <a href="#ecosystem">Ecosystem</a>
-        <a href="#get">Get Started</a>
+        <a href="#faq">FAQ</a>
       </nav>
       <div class="nav-cta">
         <a class="btn btn-primary" href="#get">Open App</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#showcase">Showcase</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-primary" href="#get">Open App</a>
     </div>
   </header>
 
@@ -439,6 +533,22 @@
     </div>
   </section>
 
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">Up and running in minutes</div>
+        <h2>How it works</h2>
+        <p>Getting started with Nexify Connect takes three simple steps.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><div class="n">1</div><h3>Sign up</h3><p>Create your account in seconds and set up a profile that's truly yours.</p></div>
+        <div class="step reveal reveal-delay-1"><div class="n">2</div><h3>Connect</h3><p>Message friends, jump into voice and video calls, and join community rooms.</p></div>
+        <div class="step reveal reveal-delay-2"><div class="n">3</div><h3>Level up</h3><p>Earn XP, keep streaks alive and climb the leaderboards as you connect.</p></div>
+      </div>
+    </div>
+  </section>
+
   <!-- SHOWCASE -->
   <section class="section" id="showcase">
     <div class="wrap showcase">
@@ -474,6 +584,39 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">Questions, answered</div>
+        <h2>Frequently asked questions</h2>
+        <p>Everything you need to know about Nexify Connect.</p>
+      </div>
+      <div class="faq reveal">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is Nexify Connect?<span class="chev">+</span></button>
+          <div class="faq-a"><p>Nexify Connect is an all-in-one social app that brings messaging, calls, communities, an AI assistant, music, fitness and focus into one place, so you can connect with friends and stay on top of your day without juggling a dozen apps.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is it really made for teens?<span class="chev">+</span></button>
+          <div class="faq-a"><p>Yes. Nexify Connect is designed with teens in mind, from the playful XP and streaks to the clean, distraction-free interface that keeps the focus on connecting with the people you care about.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is Nexify Connect free?<span class="chev">+</span></button>
+          <div class="faq-a"><p>You can get started for free. Jump in, create your profile and start connecting with friends and communities right away.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What can I do in the app?<span class="chev">+</span></button>
+          <div class="faq-a"><p>Chat one-on-one or in groups, make voice and video calls, join community rooms, talk to Nexify AI, listen to music with Nexify Waves, track fitness with Nexify Fit, focus with Focus Pods, and earn XP, ranks and leaderboard spots along the way.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">How do XP, ranks and streaks work?<span class="chev">+</span></button>
+          <div class="faq-a"><p>You earn XP as you use the app and connect with others. Keep a daily streak alive, climb through ranks and compete with friends on the leaderboards, connecting becomes genuinely rewarding.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="section" id="get">
     <div class="wrap">
@@ -491,19 +634,48 @@
   <!-- FOOTER -->
   <footer>
     <div class="wrap">
-      <div class="foot">
-        <a class="brand" href="#top">
-          <img src="assets/logo.png" alt="" style="width:30px;height:30px;border-radius:9px;" />
-          <span>Nexify Connect</span>
-        </a>
-        <div class="links">
+      <div class="footer-grid">
+        <div class="about">
+          <a class="brand" href="#top">
+            <img src="assets/logo.png" alt="" style="width:34px;height:34px;border-radius:10px;" />
+            <span>Nexify Connect</span>
+          </a>
+          <p>The premium all-in-one social app, made for teens. Connect Smarter.</p>
+          <div class="socials" style="margin-top:16px;">
+            <a href="#top" aria-label="Instagram" title="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#top" aria-label="X" title="X">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/></svg>
+            </a>
+            <a href="#top" aria-label="TikTok" title="TikTok">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3a5.5 5.5 0 0 0 4.5 4.5v3a8.5 8.5 0 0 1-4.5-1.3v6.05A6.25 6.25 0 1 1 10 9.06v3.2a3.05 3.05 0 1 0 2.25 2.94V3h4.25Z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
           <a href="#features">Features</a>
+          <a href="#how">How it works</a>
           <a href="#showcase">Showcase</a>
           <a href="#ecosystem">Ecosystem</a>
-          <a href="#get">Open App</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#top">About</a>
+          <a href="#faq">FAQ</a>
+          <a href="mailto:gntspinto@gmail.com">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
         </div>
       </div>
-      <div class="copyright">&copy; <span id="year"></span> Nexify Connect &middot; Connect Smarter. All rights reserved.</div>
+      <div class="footer-bottom">
+        <div class="copyright">&copy; <span id="year"></span> Nexify Connect &middot; Connect Smarter. All rights reserved.</div>
+        <a class="btn btn-primary" href="#get" style="padding:10px 22px;font-size:14px;">Open App</a>
+      </div>
     </div>
   </footer>
 
@@ -583,6 +755,36 @@
         rp.style.top = (e.clientY - rect.top - size / 2) + 'px';
         btn.appendChild(rp);
         setTimeout(() => rp.remove(), 550);
+      });
+    });
+    // Mobile menu toggle
+    const burger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const setMenu = (open) => {
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      mobileMenu.classList.toggle('open', open);
+    };
+    burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+    // FAQ accordion (one open at a time; height-based so it animates smoothly)
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      q.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(other => {
+          if (other !== item) {
+            other.classList.remove('open');
+            other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+            other.querySelector('.faq-a').style.maxHeight = null;
+          }
+        });
+        item.classList.toggle('open', !isOpen);
+        q.setAttribute('aria-expanded', String(!isOpen));
+        a.style.maxHeight = !isOpen ? a.scrollHeight + 'px' : null;
       });
     });
   </script>
