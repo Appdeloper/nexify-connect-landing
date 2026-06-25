@@ -42,6 +42,22 @@
       --g-card:   linear-gradient(135deg, rgba(79,70,229,0.07), rgba(139,92,246,0.04));
       --g-danger: linear-gradient(135deg, #EF4444, #DC2626);
 
+      /* Interaction token system (v4.0) */
+      --n-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+      --n-ease:     cubic-bezier(0.4, 0, 0.2, 1);
+      --n-ease-in:  cubic-bezier(0.4, 0, 1, 1);
+      --n-ease-out: cubic-bezier(0, 0, 0.2, 1);
+      --dur-instant: 80ms;
+      --dur-fast:    180ms;
+      --dur-normal:  280ms;
+      --dur-slow:    400ms;
+      --dur-delight: 600ms;
+      --glow-sm: 0 0 12px rgba(79,70,229,0.35);
+      --glow-md: 0 0 24px rgba(79,70,229,0.45);
+      --glow-lg: 0 0 40px rgba(79,70,229,0.55), 0 0 80px rgba(0,198,255,0.18);
+      --glow-cx: 0 0 20px rgba(0,198,255,0.4);
+      --glow-err: 0 0 16px rgba(239,68,68,0.35);
+
       --radius-md: 16px;
       --radius-lg: 20px;
       --radius-xl: 28px;
@@ -99,12 +115,24 @@
     .btn {
       position: relative; overflow: hidden;
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 44px;
       font-weight: 600; font-size: 15px; cursor: pointer; border: none;
       border-radius: var(--radius-pill); padding: 13px 26px;
-      transition: transform .2s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+      transition: transform var(--dur-fast) var(--n-ease),
+                  box-shadow var(--dur-fast) var(--n-ease),
+                  background var(--dur-fast) var(--n-ease),
+                  filter var(--dur-fast) var(--n-ease),
+                  border-color var(--dur-fast) var(--n-ease);
       will-change: transform;
     }
-    .btn:active { transform: scale(.96); }
+    .btn:hover { filter: brightness(1.08); }
+    .btn:active { transform: scale(.955); transition-duration: var(--dur-instant); }
+    .btn:disabled, .btn[aria-disabled="true"] { opacity: .35; cursor: not-allowed; pointer-events: none; }
+
+    /* Global keyboard focus rings */
+    a:focus-visible, .btn:focus-visible, [tabindex]:focus-visible {
+      outline: none; box-shadow: 0 0 0 2px rgba(0,198,255,0.6);
+    }
     .btn .rp {
       position: absolute; border-radius: 50%; transform: scale(0); pointer-events: none;
       background: rgba(255,255,255,0.35); animation: ripple .5s ease-out forwards;
@@ -130,9 +158,11 @@
       border-bottom: 1px solid rgba(79,70,229,0.2);
       box-shadow: 0 4px 24px rgba(0,0,0,0.4);
     }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; transition: height var(--dur-normal) var(--n-ease); }
+    header.nav.scrolled .nav-inner { height: 56px; }
     .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 18px; letter-spacing: -.3px; }
-    .brand img { width: 38px; height: 38px; border-radius: 11px; }
+    .brand img { width: 38px; height: 38px; border-radius: 11px; transition: width var(--dur-normal) var(--n-ease), height var(--dur-normal) var(--n-ease); }
+    header.nav.scrolled .brand img { width: 32px; height: 32px; }
     .nav-links { display: flex; align-items: center; gap: 34px; }
     .nav-links a { color: var(--text-muted); font-size: 15px; font-weight: 500; transition: color .2s, text-shadow .2s; }
     .nav-links a:hover { color: #fff; text-shadow: 0 0 12px rgba(0,198,255,0.5); }
@@ -217,6 +247,12 @@
       transition: all 300ms cubic-bezier(.4,0,.2,1);
       position: relative; overflow: hidden; will-change: transform;
     }
+    .card::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent 45%);
+      opacity: 0; transition: opacity var(--dur-normal) var(--n-ease);
+    }
+    .card:hover::after { opacity: 1; }
     .card:hover {
       transform: translateY(-6px); border-color: rgba(79,70,229,0.4);
       box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(79,70,229,0.25), inset 0 1px 0 rgba(255,255,255,0.06);
@@ -287,6 +323,27 @@
     .foot .links a:hover { color: #fff; }
     .copyright { color: rgba(255,255,255,0.3); font-size: 13px; margin-top: 18px; }
 
+    /* ── SECTION 12: Media blur-up (only engages once JS adds .mu) ── */
+    img.mu { filter: blur(14px); opacity: 0; }
+    img.mu.mu-done {
+      filter: blur(0); opacity: 1;
+      transition: filter var(--dur-slow) var(--n-ease), opacity var(--dur-slow) var(--n-ease);
+    }
+
+    /* ── SECTION 9: Scroll-to-top FAB ── */
+    .fab-top {
+      position: fixed; right: 24px; bottom: 24px; z-index: 60;
+      width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(79,70,229,0.4);
+      background: var(--g-cta); color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+      box-shadow: var(--glow-md);
+      opacity: 0; transform: translateY(88px); pointer-events: none;
+      transition: opacity var(--dur-normal) var(--n-ease), transform var(--dur-normal) var(--n-spring), box-shadow var(--dur-fast) var(--n-ease);
+    }
+    .fab-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .fab-top:hover { box-shadow: var(--glow-lg); filter: brightness(1.08); }
+    .fab-top:active { transform: scale(.92); }
+
     /* ── SECTION 9: Scroll reveal ── */
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity 600ms cubic-bezier(.4,0,.2,1), transform 600ms cubic-bezier(.4,0,.2,1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -343,7 +400,7 @@
         </div>
       </div>
       <div class="phone-stage">
-        <div class="phone"><img src="assets/screen-home.png" alt="Nexify Connect home screen" loading="lazy" /></div>
+        <div class="phone"><img src="assets/screen-home.png" alt="Nexify Connect home screen" loading="lazy" data-blurup /></div>
       </div>
     </div>
   </section>
@@ -373,7 +430,7 @@
   <!-- SHOWCASE -->
   <section class="section" id="showcase">
     <div class="wrap showcase">
-      <div class="panel reveal"><img src="assets/screens-collage.png" alt="A collage of Nexify Connect screens" loading="lazy" /></div>
+      <div class="panel reveal"><img src="assets/screens-collage.png" alt="A collage of Nexify Connect screens" loading="lazy" data-blurup /></div>
       <div class="reveal reveal-delay-1">
         <div class="kicker">Designed to feel premium</div>
         <h2 style="font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-1px;margin:12px 0 10px;">A next-gen interface, end to end</h2>
@@ -416,6 +473,9 @@
     </div>
   </section>
 
+  <!-- Scroll-to-top FAB -->
+  <button class="fab-top" id="fabTop" aria-label="Back to top">&#8593;</button>
+
   <!-- FOOTER -->
   <footer>
     <div class="wrap">
@@ -438,10 +498,30 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // SECTION 3: scroll-aware navbar
+    // SECTION 3 + 9: scroll-aware navbar + scroll-to-top FAB (single RAF-batched handler)
     const nav = document.getElementById('nav');
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+    const fab = document.getElementById('fabTop');
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        nav.classList.toggle('scrolled', y > 40);
+        fab.classList.toggle('show', y > 400);
+        ticking = false;
+      });
+    };
     onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+    fab.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
+
+    // SECTION 12: blur-up image load (no-op if JS off; skips already-cached images)
+    document.querySelectorAll('img[data-blurup]').forEach(img => {
+      if (img.complete && img.naturalWidth) return;
+      img.classList.add('mu');
+      img.addEventListener('load', () => img.classList.add('mu-done'), { once: true });
+      img.addEventListener('error', () => img.classList.remove('mu'), { once: true });
+    });
 
     // SECTION 9: scroll reveal
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
