@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexify Connect - Connect Smarter</title>
+  <meta name="description" content="Nexify Connect is the premium all-in-one social ecosystem: messaging, calls, communities, an AI assistant, music, fitness and focus, wrapped in a next-gen experience. Connect Smarter." />
+  <meta name="theme-color" content="#0A0E1A" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nexify Connect - Connect Smarter" />
+  <meta property="og:description" content="One app for chats, calls, communities, AI, music, fitness and focus. Connect Smarter." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/logo.png" />
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --nexify-cyan:   #00C6FF;
+      --nexify-blue:   #3B82F6;
+      --nexify-purple: #8B5CF6;
+      --nexify-pink:   #EC4899;
+      --nexify-dark:   #0A0E1A;
+      --nexify-surface:#0D1321;
+      --nexify-glass:  rgba(13, 19, 33, 0.7);
+      --nexify-border: rgba(59, 130, 246, 0.18);
+      --text:          #ffffff;
+      --text-muted:    #94A3B8;
+
+      --grad-primary: linear-gradient(135deg, #00C6FF 0%, #3B82F6 50%, #8B5CF6 100%);
+      --grad-button:  linear-gradient(135deg, #3B82F6, #8B5CF6);
+      --grad-surface: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(139,92,246,0.05));
+
+      --radius-md: 16px;
+      --radius-lg: 20px;
+      --radius-xl: 24px;
+      --radius-pill: 999px;
+      --maxw: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--nexify-dark);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient background glows */
+    .bg-glows { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .bg-glows span {
+      position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.35;
+    }
+    .bg-glows .g1 { width: 520px; height: 520px; background: #1d4ed8; top: -180px; left: -120px; }
+    .bg-glows .g2 { width: 480px; height: 480px; background: #8B5CF6; top: 220px; right: -160px; opacity: 0.28; }
+    .bg-glows .g3 { width: 420px; height: 420px; background: #00C6FF; bottom: -160px; left: 30%; opacity: 0.18; }
+
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-weight: 600; font-size: 15px; cursor: pointer; border: none;
+      border-radius: var(--radius-pill); padding: 13px 26px;
+      transition: transform .2s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+      will-change: transform;
+    }
+    .btn-primary {
+      background: var(--grad-button); color: #fff;
+      box-shadow: 0 0 20px rgba(59,130,246,0.35);
+    }
+    .btn-primary:hover { box-shadow: 0 0 32px rgba(59,130,246,0.6); transform: translateY(-2px); }
+    .btn-primary:active { transform: scale(.97); }
+    .btn-ghost {
+      background: transparent; color: #93C5FD;
+      border: 1px solid rgba(59,130,246,0.35);
+    }
+    .btn-ghost:hover { background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.6); }
+    .btn-lg { padding: 16px 34px; font-size: 16px; }
+
+    /* Navbar */
+    header.nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
+      background: rgba(10,14,26,0.6);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 18px; letter-spacing: -.3px; }
+    .brand img { width: 38px; height: 38px; border-radius: 11px; }
+    .nav-links { display: flex; align-items: center; gap: 34px; }
+    .nav-links a { color: var(--text-muted); font-size: 15px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+
+    /* Hero */
+    .hero { padding: 90px 0 70px; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 50px; align-items: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; color: #93C5FD;
+      background: var(--grad-surface); border: 1px solid var(--nexify-border);
+      padding: 8px 16px; border-radius: var(--radius-pill); margin-bottom: 26px;
+    }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--nexify-cyan); box-shadow: 0 0 10px var(--nexify-cyan); }
+    h1.headline {
+      font-size: clamp(40px, 6vw, 66px); line-height: 1.05; font-weight: 800; letter-spacing: -1.5px;
+      margin-bottom: 22px;
+    }
+    .gradient-text {
+      background: var(--grad-primary); -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p.lead { font-size: 19px; color: var(--text-muted); max-width: 540px; margin-bottom: 34px; }
+    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 30px; }
+    .hero-meta { display: flex; gap: 28px; flex-wrap: wrap; color: var(--text-muted); font-size: 14px; }
+    .hero-meta b { color: #fff; font-weight: 700; }
+
+    /* Phone mockup */
+    .phone-stage { display: flex; justify-content: center; position: relative; }
+    .phone-stage::before {
+      content: ""; position: absolute; width: 360px; height: 360px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.45), transparent 65%); filter: blur(40px);
+      top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 0;
+    }
+    .phone {
+      position: relative; z-index: 1; width: 300px; border-radius: 42px; padding: 10px;
+      background: linear-gradient(160deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 40px 90px rgba(0,0,0,0.6), 0 0 60px rgba(59,130,246,0.25);
+      animation: float 6s ease-in-out infinite;
+    }
+    .phone img { width: 100%; display: block; border-radius: 33px; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero p.lead { margin-left: auto; margin-right: auto; }
+      .hero-cta, .hero-meta { justify-content: center; }
+      .eyebrow { margin-left: auto; margin-right: auto; }
+    }
+
+    /* Section heading */
+    .section { padding: 80px 0; }
+    .sec-head { text-align: center; max-width: 640px; margin: 0 auto 54px; }
+    .sec-head .kicker { color: #93C5FD; font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; }
+    .sec-head h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -1px; margin: 12px 0 14px; }
+    .sec-head p { color: var(--text-muted); font-size: 17px; }
+
+    /* Feature grid */
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .features { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--nexify-glass); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--nexify-border); border-radius: var(--radius-lg); padding: 26px;
+      transition: transform .3s cubic-bezier(.4,0,.2,1), border-color .3s, box-shadow .3s;
+      position: relative; overflow: hidden;
+    }
+    .card:hover { transform: translateY(-6px); border-color: rgba(59,130,246,0.4); box-shadow: 0 18px 40px rgba(0,0,0,0.4), 0 0 24px rgba(59,130,246,0.12); }
+    .card .ico {
+      width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      background: var(--grad-surface); border: 1px solid var(--nexify-border); margin-bottom: 18px; font-size: 24px;
+    }
+    .card h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+    .card p { color: var(--text-muted); font-size: 15px; }
+
+    /* Showcase */
+    .showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    @media (max-width: 900px) { .showcase { grid-template-columns: 1fr; } }
+    .showcase .panel img {
+      width: 100%; border-radius: var(--radius-xl); border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+    }
+    .showcase ul { list-style: none; margin-top: 24px; display: grid; gap: 16px; }
+    .showcase li { display: flex; gap: 14px; align-items: flex-start; }
+    .showcase li .tick {
+      flex: 0 0 26px; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: var(--grad-button); font-size: 14px; box-shadow: 0 0 14px rgba(59,130,246,0.4);
+    }
+    .showcase li b { display: block; font-size: 16px; }
+    .showcase li span { color: var(--text-muted); font-size: 14px; }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+    @media (max-width: 700px) { .stats { grid-template-columns: repeat(2,1fr); } }
+    .stat { text-align: center; padding: 28px 16px; border-radius: var(--radius-lg);
+      background: var(--grad-surface); border: 1px solid var(--nexify-border); }
+    .stat .num { font-size: 36px; font-weight: 800; letter-spacing: -1px; }
+    .stat .lbl { color: var(--text-muted); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+
+    /* CTA band */
+    .cta-band {
+      text-align: center; padding: 70px 32px; border-radius: var(--radius-xl); position: relative; overflow: hidden;
+      background: var(--grad-surface); border: 1px solid var(--nexify-border);
+    }
+    .cta-band h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -1px; margin-bottom: 14px; }
+    .cta-band p { color: var(--text-muted); font-size: 17px; max-width: 520px; margin: 0 auto 30px; }
+
+    /* Footer */
+    footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 44px 0; margin-top: 80px; }
+    .foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
+    .foot .brand { font-size: 16px; }
+    .foot .links { display: flex; gap: 26px; color: var(--text-muted); font-size: 14px; }
+    .foot .links a:hover { color: #fff; }
+    .copyright { color: #64748B; font-size: 13px; margin-top: 18px; }
+
+    /* reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-glows"><span class="g1"></span><span class="g2"></span><span class="g3"></span></div>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <img src="assets/logo.png" alt="Nexify Connect logo" />
+        <span>Nexify Connect</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#showcase">Showcase</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#get">Get Started</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn btn-primary" href="#get">Open App</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span> Premium Social Ecosystem</span>
+        <h1 class="headline">Your whole world,<br><span class="gradient-text">connected smarter.</span></h1>
+        <p class="lead">Nexify Connect brings messaging, calls, communities, an AI assistant, music, fitness and focus into one beautifully crafted app, so the people and tools you love live in a single place.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" href="#get">Launch Nexify Connect</a>
+          <a class="btn btn-ghost btn-lg" href="#features">Explore features</a>
+        </div>
+        <div class="hero-meta">
+          <span><b>9+</b> apps in one</span>
+          <span><b>Real-time</b> chat &amp; calls</span>
+          <span><b>AI-powered</b> assistant</span>
+        </div>
+      </div>
+      <div class="phone-stage">
+        <div class="phone"><img src="assets/screen-home.png" alt="Nexify Connect home screen" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">One app, endless ways to connect</div>
+        <h2>Everything you need, in one place</h2>
+        <p>No more juggling a dozen apps. Nexify Connect unifies your social life and your daily tools under one premium, next-gen experience.</p>
+      </div>
+      <div class="features">
+        <div class="card reveal"><div class="ico">&#128172;</div><h3>Chats &amp; Groups</h3><p>Lightning-fast direct messages and group chats with a polished, glassy interface and real-time delivery.</p></div>
+        <div class="card reveal"><div class="ico">&#128222;</div><h3>Voice &amp; Video Calls</h3><p>Crystal-clear one-tap calls to stay close to friends, teammates and communities wherever they are.</p></div>
+        <div class="card reveal"><div class="ico">&#127760;</div><h3>Community Rooms</h3><p>Create and join rooms with roles, members and moderation, your own spaces to gather and talk.</p></div>
+        <div class="card reveal"><div class="ico">&#129302;</div><h3>Nexify AI</h3><p>A built-in AI assistant that helps you write, plan, brainstorm and get answers without leaving the app.</p></div>
+        <div class="card reveal"><div class="ico">&#127925;</div><h3>Nexify Waves</h3><p>Music woven right into your social world: listen, vibe and share what's playing in real time.</p></div>
+        <div class="card reveal"><div class="ico">&#128293;</div><h3>Fit &amp; Focus Pods</h3><p>Stay healthy and productive with Nexify Fit and Focus Pods: fitness tracking and deep-work sessions.</p></div>
+        <div class="card reveal"><div class="ico">&#127942;</div><h3>XP, Ranks &amp; Leaderboards</h3><p>Earn XP, keep streaks alive, climb ranks and compete on leaderboards. Connecting has never been this rewarding.</p></div>
+        <div class="card reveal"><div class="ico">&#9889;</div><h3>Nexify Edge</h3><p>A curated edge feed that keeps you in the loop with what matters across your network.</p></div>
+        <div class="card reveal"><div class="ico">&#128276;</div><h3>Smart Notifications</h3><p>Stay on top of everything with a unified, intelligent notification center across every Nexify feature.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE -->
+  <section class="section" id="showcase">
+    <div class="wrap showcase">
+      <div class="panel reveal"><img src="assets/screens-collage.png" alt="A collage of Nexify Connect screens" /></div>
+      <div class="reveal">
+        <div class="kicker" style="color:#93C5FD;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;">Designed to feel premium</div>
+        <h2 style="font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-1px;margin:12px 0 10px;">A next-gen interface, end to end</h2>
+        <p style="color:var(--text-muted);font-size:17px;">Glassmorphism, neon glows and buttery-smooth motion across every screen. Nexify Connect looks as good as it feels.</p>
+        <ul>
+          <li><span class="tick">&#10003;</span><div><b>Glassmorphic design system</b><span>Frosted surfaces, soft glows and consistent spacing on every page.</span></div></li>
+          <li><span class="tick">&#10003;</span><div><b>Fluid micro-interactions</b><span>Pops, ripples and transitions that make the app feel alive.</span></div></li>
+          <li><span class="tick">&#10003;</span><div><b>Dark, focused &amp; battery-friendly</b><span>A deep-navy theme tuned for comfort, day or night.</span></div></li>
+          <li><span class="tick">&#10003;</span><div><b>Personalize everything</b><span>Themes, profile customization and a home that's truly yours.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS / ECOSYSTEM -->
+  <section class="section" id="ecosystem">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">The Nexify ecosystem</div>
+        <h2>More than a messenger</h2>
+        <p>Nexify Connect is built as a complete ecosystem: every feature works together so your day flows in one app.</p>
+      </div>
+      <div class="stats">
+        <div class="stat reveal"><div class="num gradient-text">9+</div><div class="lbl">Integrated apps</div></div>
+        <div class="stat reveal"><div class="num gradient-text">1</div><div class="lbl">Unified inbox</div></div>
+        <div class="stat reveal"><div class="num gradient-text">24/7</div><div class="lbl">AI assistant</div></div>
+        <div class="stat reveal"><div class="num gradient-text">&#8734;</div><div class="lbl">Ways to connect</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" id="get">
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <h2>Ready to <span class="gradient-text">Connect Smarter</span>?</h2>
+        <p>Jump into Nexify Connect and bring your chats, calls, communities and tools together, all in one premium app.</p>
+        <a class="btn btn-primary btn-lg" href="#get">Launch Nexify Connect</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <a class="brand" href="#top">
+          <img src="assets/logo.png" alt="" style="width:30px;height:30px;border-radius:9px;" />
+          <span>Nexify Connect</span>
+        </a>
+        <div class="links">
+          <a href="#features">Features</a>
+          <a href="#showcase">Showcase</a>
+          <a href="#ecosystem">Ecosystem</a>
+          <a href="#get">Open App</a>
+        </div>
+      </div>
+      <div class="copyright">&copy; <span id="year"></span> Nexify Connect &middot; Connect Smarter. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i % 6) * 60 + 'ms';
+      io.observe(el);
+    });
+  </script>
+</body>
+</html>
